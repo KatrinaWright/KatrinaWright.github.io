@@ -1,1 +1,30 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Python Runner with Pyodide</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>🐍 Python Code Runner</h1>
+
+    <textarea id="python-code" rows="12" cols="60">
+print("Hello, world!")
+for i in range(3):
+    print("Line", i + 1)
+    </textarea>
+
+    <br/>
+    <button onclick="runPython()">▶️ Run Code</button>
+
+    <h2>💡 Output:</h2>
+    <pre id="output"></pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
