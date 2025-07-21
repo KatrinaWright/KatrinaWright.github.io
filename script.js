@@ -2,6 +2,7 @@ let pyodideReady = false;
 let pyodide;
 
 async function main() {
+    debugger
   pyodide = await loadPyodide();
   pyodideReady = true;
 }
