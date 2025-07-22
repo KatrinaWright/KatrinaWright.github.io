@@ -2,7 +2,6 @@ let pyodideReady = false;
 let pyodide;
 
 async function main() {
-    debugger
   pyodide = await loadPyodide();
   pyodideReady = true;
 }
@@ -17,9 +16,21 @@ async function runPython() {
 
   const code = document.getElementById("python-code").value;
   const output = document.getElementById("output");
+
   try {
-    let result = await pyodide.runPythonAsync(code);
-    output.textContent = result ?? "(No output)";
+    // Redirect stdout/stderr using Python's contextlib
+    await pyodide.runPythonAsync(`
+import sys
+from io import StringIO
+sys.stdout = sys.stderr = StringIO()
+    `);
+
+    // Run user code
+    await pyodide.runPythonAsync(code);
+
+    // Get the printed output
+    const result = await pyodide.runPythonAsync(`sys.stdout.getvalue()`);
+    output.textContent = result || "(No output)";
   } catch (err) {
     output.textContent = `❌ Error:\n${err}`;
   }
